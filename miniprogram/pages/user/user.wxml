@@ -1,0 +1,22 @@
+<view class="container">
+  <view class="userinfo">
+    <block wx:if="{{!hasUserInfo && canIUse}}">
+      <button open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+    </block>
+    <block wx:else>
+      <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </block>
+  </view>
+  <view class="user-info-list">
+    <view class="info-item">
+      <text class="info-label">用户ID：</text>
+      <text class="info-value">{{userInfo.openId || '未知'}}</text>
+    </view>
+    <view class="info-item">
+      <text class="info-label">注册时间：</text>
+      <text class="info-value">{{userInfo.registerTime || '未知'}}</text>
+    </view>
+  </view>
+  <button class="logout-btn" bindtap="logout">退出登录</button>
+</view>

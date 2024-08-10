@@ -1,0 +1,12 @@
+<view class="container">
+  <view class="pass-list">
+    <view class="pass-item" wx:for="{{passes}}" wx:key="index">
+      <text class="password">密码: {{item.password}}</text>
+      <text class="expire-time">过期时间: {{item.expireTimeFormatted}}</text>
+      <text class="remain-time">剩余时间: {{item.remainTime}}</text>
+    </view>
+  </view>
+  <view class="no-pass" wx:if="{{passes.length === 0}}">
+    暂无有效的临时密码
+  </view>
+</view>

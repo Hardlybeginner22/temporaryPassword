@@ -1,0 +1,13 @@
+<view class="container">
+  <view class="form">
+    <view class="form-item">
+      <text>密码:</text>
+      <input type="number" placeholder="请输入6位数字密码" maxlength="6" bindinput="onPasswordInput" />
+    </view>
+    <view class="form-item">
+      <text>有效期(小时):</text>
+      <input type="number" placeholder="请输入有效期" value="1" bindinput="onDurationInput" />
+    </view>
+    <button class="submit-btn" bindtap="createPassword">创建临时密码</button>
+  </view>
+</view>

@@ -1,0 +1,7 @@
+<view class="container">
+  <view class="logo">
+    <image src="/images/logo.png"></image>
+  </view>
+  <view class="title">临时密码管理</view>
+  <button class="login-btn" open-type="getUserInfo" bindgetuserinfo="onGetUserInfo">微信登录</button>
+</view>
