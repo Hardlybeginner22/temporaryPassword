@@ -1,15 +1,35 @@
+:root {
+  --primary-color: #ff4d4f;
+  --background-color: #f8f8f8;
+  --text-color: #666;
+  --border-radius: 10rpx;
+}
+
 .container {
   padding: 20rpx;
 }
 
 .pass-item {
-  background-color: #f8f8f8;
+  background-color: var(--background-color);
   padding: 20rpx;
   margin-bottom: 20rpx;
-  border-radius: 10rpx;
+  border-radius: var(--border-radius);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s ease;
 }
 
-.pass-item text {
+.pass-item:hover {
+  background-color: #f0f0f0;
+}
+
+.pass-info {
+  flex: 1;
+  margin-right: 20rpx;
+}
+
+.pass-info text {
   display: block;
   margin-bottom: 10rpx;
 }
@@ -19,8 +39,46 @@
   font-weight: bold;
 }
 
+.expire-time, .remain-time {
+  font-size: 28rpx;
+  color: var(--text-color);
+}
+
+.delete-btn {
+  color: var(--primary-color);
+  padding: 10rpx 20rpx;
+  font-size: 28rpx;
+  background-color: #fff;
+  border: 1px solid var(--primary-color);
+  border-radius: 6rpx;
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-width: 80rpx;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.delete-btn:hover {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
 .no-pass {
   text-align: center;
   color: #999;
   margin-top: 100rpx;
+}
+
+@media (max-width: 600px) {
+  .pass-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .delete-btn {
+    margin-top: 10rpx;
+    align-self: flex-end;
+    background-color:#ff4d4f;
+    color:#fff;
+  }
 }

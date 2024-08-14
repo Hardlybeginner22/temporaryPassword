@@ -4,29 +4,35 @@ cloud.init()
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
   const db = cloud.database()
+  const { userInfo } = event
 
   try {
-    // 检查用户是否已存在
     const userCollection = db.collection('users')
-    const user = await userCollection.where({
+    let user = await userCollection.where({
       openid: wxContext.OPENID
     }).get()
 
+    let userId, registerTime
+
     if (user.data.length === 0) {
-      // 如果用户不存在,创建新用户
-      await userCollection.add({
+      // 如果用户不存在，创建新用户
+      const result = await userCollection.add({
         data: {
           openid: wxContext.OPENID,
+          userInfo: userInfo,
           createdAt: db.serverDate(),
           lastLoginAt: db.serverDate()
         }
       })
+      userId = result._id
+      registerTime = new Date().toISOString() // 使用当前时间作为注册时间
     } else {
-      // 更新最后登录时间
-      await userCollection.where({
-        openid: wxContext.OPENID
-      }).update({
+      // 更新用户信息和最后登录时间
+      userId = user.data[0]._id
+      registerTime = user.data[0].createdAt
+      await userCollection.doc(userId).update({
         data: {
+          userInfo: userInfo,
           lastLoginAt: db.serverDate()
         }
       })
@@ -37,6 +43,9 @@ exports.main = async (event, context) => {
       openid: wxContext.OPENID,
       appid: wxContext.APPID,
       unionid: wxContext.UNIONID,
+      userInfo: userInfo,
+      userId: userId,
+      registerTime: registerTime
     }
   } catch (err) {
     console.error('Login error:', err)

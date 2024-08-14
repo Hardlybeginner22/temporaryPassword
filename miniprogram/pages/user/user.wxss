@@ -1,17 +1,21 @@
 .container {
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 50rpx 0;
-  box-sizing: border-box;
+  padding: 40rpx;
+  background-color: #f6f6f6;
+  min-height: 100vh;
 }
 
 .userinfo {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 50rpx;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 15rpx;
+  padding: 30rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
 }
 
 .userinfo-avatar {
@@ -19,36 +23,69 @@
   height: 128rpx;
   margin: 20rpx;
   border-radius: 50%;
+  overflow: hidden;
+  border: 4rpx solid #4caf50;
 }
 
 .userinfo-nickname {
   color: #333;
   font-size: 32rpx;
+  font-weight: bold;
+  margin-top: 20rpx;
 }
 
 .user-info-list {
-  width: 80%;
-  margin-top: 50rpx;
+  width: 100%;
+  margin-top: 40rpx;
+  background-color: #ffffff;
+  border-radius: 15rpx;
+  padding: 20rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
 }
 
 .info-item {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20rpx;
-  padding: 10rpx;
-  border-bottom: 1rpx solid #eee;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #e0e0e0;
+}
+
+.info-item:last-child {
+  border-bottom: none;
 }
 
 .info-label {
   color: #888;
+  font-size: 28rpx;
 }
 
 .info-value {
   color: #333;
+  font-size: 28rpx;
+  font-weight: 500;
+}
+
+button {
+  margin-top: 40rpx;
+  width: 80%;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 10rpx;
+  padding: 20rpx 0;
+  font-size: 32rpx;
+  transition: background-color 0.3s;
+}
+
+button:active {
+  background-color: #45a049;
 }
 
 .logout-btn {
-  margin-top: 100rpx;
-  background-color: #f00;
-  color: #fff;
+  background-color: #f44336;
+  margin-top: 60rpx;
+}
+
+.logout-btn:active {
+  background-color: #d32f2f;
 }

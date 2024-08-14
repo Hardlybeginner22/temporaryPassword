@@ -5,63 +5,39 @@ exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
   const db = cloud.database()
 
-  console.log('Creating temp password with data:', event)
+  console.log('Attempting to delete temp password with id:', event.id)
 
   try {
-    const { password, duration } = event
-    const now = new Date()
-    const expireTime = new Date(now.getTime() + duration * 60 * 60 * 1000)
-
-    // 创建临时密码记录
-    const result = await db.collection('temp_passwords').add({
-      data: {
-        userId: wxContext.OPENID,
-        password: password,
-        createTime: db.serverDate(),
-        expireTime: expireTime,
-        isValid: true,
-        deviceSent: false
-      }
-    })
-
-    console.log('Temp password created:', result)
-
-    // 调用sendToDevice云函数
-    const sendResult = await cloud.callFunction({
-      name: 'sendToDevice',
-      data: {
-        password: password,
-        expireTime: expireTime
-      }
-    })
-
-    console.log('sendToDevice result:', sendResult)
-
-    if (sendResult.result && sendResult.result.success) {
-      // 更新deviceSent状态
-      await db.collection('temp_passwords').doc(result._id).update({
-        data: {
-          deviceSent: true
-        }
-      })
-
-      return {
-        success: true,
-        passwordId: result._id,
-        deviceResponse: sendResult.result
-      }
-    } else {
-      // 如果发送到设备失败，我们仍然保留密码记录，但标记为未发送到设备
-      console.error('Failed to send to device:', sendResult)
+    // 检查密码是否属于当前用户
+    const password = await db.collection('temp_passwords').doc(event.id).get()
+    
+    if (password.data.userId !== wxContext.OPENID) {
+      console.error('User not authorized to delete this password')
       return {
         success: false,
-        passwordId: result._id,
-        error: 'Failed to send to device',
-        deviceResponse: sendResult.result
+        error: 'Not authorized to delete this password'
+      }
+    }
+
+    // 删除密码
+    const result = await db.collection('temp_passwords').doc(event.id).remove()
+
+    console.log('Delete operation result:', result)
+
+    if (result.stats.removed === 1) {
+      return { 
+        success: true,
+        message: 'Password deleted successfully'
+      }
+    } else {
+      console.error('Delete operation did not remove any document')
+      return { 
+        success: false, 
+        error: 'Password not found or already deleted'
       }
     }
   } catch (err) {
-    console.error('Create temp password error:', err)
+    console.error('Error in delete operation:', err)
     return {
       success: false,
       error: err.message

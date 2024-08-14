@@ -1,18 +1,18 @@
 <view class="container">
   <view class="userinfo">
     <block wx:if="{{!hasUserInfo && canIUse}}">
-      <button open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+      <button class="userinfo-btn" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
     </block>
     <block wx:elif="{{hasUserInfo}}">
       <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
     </block>
   </view>
-  <view class="usermotto">
-    <text class="user-motto">欢迎使用临时密码管理系统</text>
+  <view class="welcome-box">
+    <text class="welcome-text">欢迎使用临时密码管理系统</text>
   </view>
   <view class="function-buttons">
-    <button bindtap="navigateToCreatePass">创建临时密码</button>
-    <button bindtap="navigateToPassList">查看密码列表</button>
+    <button class="function-btn create-btn" bindtap="navigateToCreatePass">创建临时密码</button>
+    <button class="function-btn list-btn" bindtap="navigateToPassList">查看密码列表</button>
   </view>
 </view>

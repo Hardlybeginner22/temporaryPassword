@@ -4,6 +4,7 @@
       <text class="password">密码: {{item.password}}</text>
       <text class="expire-time">过期时间: {{item.expireTimeFormatted}}</text>
       <text class="remain-time">剩余时间: {{item.remainTime}}</text>
+      <button class="delete-btn" bindtap="deletePass" data-id="{{item._id}}">删除</button>
     </view>
   </view>
   <view class="no-pass" wx:if="{{passes.length === 0}}">

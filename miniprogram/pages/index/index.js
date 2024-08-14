@@ -12,7 +12,6 @@ Page({
   },
 
   onShow: function () {
-    // 每次页面显示时检查登录状态
     this.checkLoginStatus()
   },
 
@@ -23,7 +22,6 @@ Page({
         hasUserInfo: true
       })
     } else {
-      // 如果没有用户信息,跳转到登录页面
       wx.redirectTo({
         url: '/pages/login/login'
       })
@@ -38,7 +36,6 @@ Page({
         hasUserInfo: true
       })
     } else {
-      // 用户拒绝授权
       wx.showToast({
         title: '需要授权才能使用',
         icon: 'none'
@@ -49,22 +46,54 @@ Page({
   navigateToCreatePass: function() {
     if (this.data.hasUserInfo) {
       wx.navigateTo({
-        url: '/pages/createPass/createPass'
-      })
+        url: '../createPass/createPass',
+        fail: function(err) {
+          console.error('导航到创建密码页面失败', err);
+          wx.showToast({
+            title: '页面跳转失败',
+            icon: 'none'
+          });
+        }
+      });
     } else {
-      this.showNeedLoginToast()
+      this.showNeedLoginToast();
     }
   },
-
+  
+  navigateToCreatePass: function() {
+    if (this.data.hasUserInfo) {
+      wx.switchTab({
+        url: '/pages/createPass/createPass',
+        fail: function(err) {
+          console.error('切换到创建密码页面失败', err);
+          wx.showToast({
+            title: '页面切换失败',
+            icon: 'none'
+          });
+        }
+      });
+    } else {
+      this.showNeedLoginToast();
+    }
+  },
+  
   navigateToPassList: function() {
     if (this.data.hasUserInfo) {
-      wx.navigateTo({
-        url: '/pages/passlist/passlist'
-      })
+      wx.switchTab({
+        url: '/pages/passlist/passlist',
+        fail: function(err) {
+          console.error('切换到密码列表页面失败', err);
+          wx.showToast({
+            title: '页面切换失败',
+            icon: 'none'
+          });
+        }
+      });
     } else {
-      this.showNeedLoginToast()
+      this.showNeedLoginToast();
     }
   },
+  
 
   showNeedLoginToast: function() {
     wx.showToast({

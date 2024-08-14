@@ -66,5 +66,47 @@ Page({
     if (this.timer) {
       clearInterval(this.timer)
     }
+  },
+
+  // 新增删除密码的方法
+  deletePass(event) {
+    const { id } = event.currentTarget.dataset
+    wx.showModal({
+      title: '确认删除',
+      content: '确定要删除这个临时密码吗？',
+      success: (res) => {
+        if (res.confirm) {
+          wx.showLoading({
+            title: '删除中...',
+          })
+          wx.cloud.callFunction({
+            name: 'deleteTempPass',
+            data: { id },
+            success: res => {
+              wx.hideLoading()
+              if (res.result.success) {
+                wx.showToast({
+                  title: '删除成功',
+                  icon: 'success'
+                })
+                this.getPassList() // 重新获取密码列表
+              } else {
+                wx.showToast({
+                  title: '删除失败',
+                  icon: 'none'
+                })
+              }
+            },
+            fail: err => {
+              wx.hideLoading()
+              wx.showToast({
+                title: '删除失败',
+                icon: 'none'
+              })
+            }
+          })
+        }
+      }
+    })
   }
 })
