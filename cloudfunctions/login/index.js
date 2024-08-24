@@ -4,7 +4,7 @@ cloud.init()
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
   const db = cloud.database()
-  const { userInfo } = event
+  const { avatarUrl, nickname } = event.userInfo
 
   try {
     const userCollection = db.collection('users')
@@ -19,7 +19,8 @@ exports.main = async (event, context) => {
       const result = await userCollection.add({
         data: {
           openid: wxContext.OPENID,
-          userInfo: userInfo,
+          avatarUrl: avatarUrl,
+          nickname: nickname,
           createdAt: db.serverDate(),
           lastLoginAt: db.serverDate()
         }
@@ -32,7 +33,8 @@ exports.main = async (event, context) => {
       registerTime = user.data[0].createdAt
       await userCollection.doc(userId).update({
         data: {
-          userInfo: userInfo,
+          avatarUrl: avatarUrl,
+          nickname: nickname,
           lastLoginAt: db.serverDate()
         }
       })
@@ -43,7 +45,8 @@ exports.main = async (event, context) => {
       openid: wxContext.OPENID,
       appid: wxContext.APPID,
       unionid: wxContext.UNIONID,
-      userInfo: userInfo,
+      avatarUrl: avatarUrl,
+      nickname: nickname,
       userId: userId,
       registerTime: registerTime
     }

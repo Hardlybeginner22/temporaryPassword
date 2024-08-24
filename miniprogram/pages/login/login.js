@@ -5,9 +5,9 @@ Page({
     userInfo: null
   },
 
-  getUserProfile: function() {
+  getUserProfile() {
     wx.getUserProfile({
-      desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中
+      desc: '用于完善会员资料',
       success: (res) => {
         console.log('getUserProfile success:', res.userInfo)
         this.setData({
@@ -25,7 +25,7 @@ Page({
     })
   },
 
-  login: function(userInfo) {
+  login(userInfo) {
     wx.showLoading({
       title: '登录中...',
     })
@@ -55,7 +55,10 @@ Page({
           })
         } else {
           console.error('Login failed:', res)
-          throw new Error('Login failed')
+          wx.showToast({
+            title: '登录失败',
+            icon: 'none'
+          })
         }
       },
       fail: err => {
@@ -69,11 +72,11 @@ Page({
     })
   },
 
-  onLoad: function() {
+  onLoad() {
     console.log('login page onLoad')
   },
 
-  onShow: function() {
+  onShow() {
     console.log('login page onShow')
   }
 })

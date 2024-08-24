@@ -12,12 +12,9 @@
     
     <view class="info-item">
       <text class="info-label">用户ID：</text>
-      <text class="info-value">{{userInfo.userId || '未知'}}</text>
+      <text class="info-value">{{userInfo.userId || '保密'}}</text>
     </view>
-    <view class="info-item">
-      <text class="info-label">注册时间：</text>
-      <text class="info-value">{{userInfo.registerTime ? formatDate(userInfo.registerTime) : '未知'}}</text>
-    </view>
+   
   </view>
   <button class="logout-btn" bindtap="logout">退出登录</button>
 </view>
